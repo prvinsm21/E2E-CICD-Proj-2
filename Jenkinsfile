@@ -4,7 +4,7 @@ pipeline {
         DOCKERHUB_USERNAME = "prvinsm21"
     }
     stages {
-        stage (Git Checkout) {
+        stage ('Git Checkout') {
             steps {
                 sh 'echo Passed'
             }
