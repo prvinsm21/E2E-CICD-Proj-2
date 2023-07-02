@@ -47,9 +47,9 @@ pipeline {
                 script {
                     sh 'docker build -t $IMAGE_NAME .'
                     def dockerImage = docker.image("${IMAGE_NAME}")
-                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker', url: 'https://hub.docker.com/') {
-                        dockerImage.push()
-                    }
+                    docker.withRegistry('https://index.docker.io/v1/', "dockerhub") {
+                    dockerImage.push()
+            }
                 }
             }
         }  
