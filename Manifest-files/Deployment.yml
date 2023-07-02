@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resturant-website
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: resturant-website
+  template:
+    metadata:
+      labels:
+        app: resturant-website
+    spec:
+      containers:
+      - name: resturant-website
+        image: prvinsm21/resturant-website:8
+        ports:
+        - containerPort: 8080

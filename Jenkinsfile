@@ -52,6 +52,25 @@ pipeline {
             }
                 }
             }
-        }  
-    }
+        }
+        stage ('Update Deployment File') {
+            environment {
+                GIT_REPO_NAME = "E2E-CICD-Proj-2"
+                GIT_REPO_NAME = "prvinsm21"
+            }
+            steps {
+                withCredentials([string(credentialsId: 'git-push', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "prvinsm21@gmail.com"
+                    git config user.name "prvinsm21"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" Manifest-files/deployment.yml
+                    git add Manifest-files/deployment.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
+                '''
+                }
+            }
+        }
+    }  
 }
