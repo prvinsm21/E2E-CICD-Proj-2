@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: resturant-website
+  labels:
+    app: resturant-website
 spec:
   replicas: 3
   selector:
