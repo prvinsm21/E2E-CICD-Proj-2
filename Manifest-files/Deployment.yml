@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: website
-        image: prvinsm21/resturant-website:8
+        image: prvinsm21/resturant-website:replaceImageTag
         ports:
         - containerPort: 8080
