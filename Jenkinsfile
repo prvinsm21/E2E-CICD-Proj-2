@@ -26,6 +26,11 @@ pipeline {
                 sh 'mvn clean verify -DskipUnitTests'
             }
         }
+        stage ('Build stage') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
         stage ('Static Code analysis') {
             steps {
                 script {
