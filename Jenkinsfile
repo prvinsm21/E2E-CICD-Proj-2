@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_USERNAME = "prvinsm21"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        IMAGE_NAME = "prvinsm21/resturant-website:${BUILD_NUMBER}"
     }
     stages {
         stage ('Git Checkout') {
@@ -29,9 +31,27 @@ pipeline {
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-api') {
                         sh 'mvn clean package sonar:sonar'
+                    }
                 }
             }
         }
-    }
+        stage ('Quality Gate Status')  {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
+                }
+            }
+        }
+        stage ('Build and Push Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t $IMAGE_NAME .'
+                    def dockerImage = docker.image("${IMAGE_NAME}")
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker', url: 'https://hub.docker.com/') {
+                        dockerImage.push()
 }
+                }
+            }
+        }  
+    }
 }
