@@ -49,7 +49,7 @@ pipeline {
                     def dockerImage = docker.image("${IMAGE_NAME}")
                     withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker', url: 'https://hub.docker.com/') {
                         dockerImage.push()
-}
+                    }
                 }
             }
         }  
