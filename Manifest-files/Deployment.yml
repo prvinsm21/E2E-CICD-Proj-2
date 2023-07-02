@@ -15,7 +15,7 @@ spec:
         app: resturant-website
     spec:
       containers:
-      - name: resturant-website
+      - name: website
         image: prvinsm21/resturant-website:8
         ports:
         - containerPort: 8080
