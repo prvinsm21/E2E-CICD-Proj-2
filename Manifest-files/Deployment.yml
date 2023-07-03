@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: resturant-website
-        image: prvinsm21/resturant-website:replaceImageTag
+        image: prvinsm21/resturant-website:19
         resources:
           limits:
             memory: "128Mi"
